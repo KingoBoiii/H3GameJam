@@ -289,6 +289,8 @@ GameObject:
   - component: {fileID: 103255100394798854}
   - component: {fileID: 103255100394798851}
   - component: {fileID: 103255100394798852}
+  - component: {fileID: 4615100563447996628}
+  - component: {fileID: 100645881293456870}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -452,6 +454,34 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   CheckRadius: 0.2
+--- !u!114 &4615100563447996628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103255100394798874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b8a0096250c7584c961789d18caaf69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startLumen: 0
+  _maxLumen: 100
+  <Lumen>k__BackingField: 0
+--- !u!114 &100645881293456870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103255100394798874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e98ce8cb1512e74babdbe64ae746cb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lumenCollectSpeed: 25
 --- !u!1 &103255100428488265
 GameObject:
   m_ObjectHideFlags: 0

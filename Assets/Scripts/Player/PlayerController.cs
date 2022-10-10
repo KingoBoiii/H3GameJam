@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
@@ -20,14 +19,12 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
     private Rigidbody2D _rigidbody;
-    private BoxCollider2D _collider;
 
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
-        _collider = GetComponent<BoxCollider2D>();
     }
 
     private void Update()
@@ -40,7 +37,7 @@ public class PlayerController : MonoBehaviour
     {
         _velocity.x = Input.GetAxis("Horizontal");
 
-        if(Input.GetButtonDown("Jump") && _isGrounded)
+        if (Input.GetButtonDown("Jump") && _isGrounded)
         {
             _isJumping = true;
         }
@@ -64,6 +61,11 @@ public class PlayerController : MonoBehaviour
     {
         _isGrounded = Physics2D.OverlapCircle(GroundCheck.position, CheckRadius, GroundObjects);
 
+        Move();
+    }
+
+    private void Move()
+    {
         _rigidbody.velocity = new Vector2(_velocity.x * Speed, _rigidbody.velocity.y);
 
         if (_isJumping)
@@ -71,15 +73,5 @@ public class PlayerController : MonoBehaviour
             _rigidbody.AddForce(new Vector2(0.0f, JumpForce));
         }
         _isJumping = false;
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log($"Entered trigger: {other.name}");
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        Debug.Log($"Exited trigger: {other.name}");
     }
 }
