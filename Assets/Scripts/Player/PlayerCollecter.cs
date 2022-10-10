@@ -33,7 +33,6 @@ public class PlayerCollecter : MonoBehaviour
             }
 
             _lumenCollectCoroutine = StartCoroutine(CollectLumen((ILumenCollectable)_collectable));
-            //_playerResources.Collect(_collectable);
             _collectable = null;
         }
     }
@@ -75,6 +74,12 @@ public class PlayerCollecter : MonoBehaviour
         if (!other.TryGetComponent<ICollectable>(out var _))
         {
             return;
+        }
+
+        if (_lumenCollectCoroutine != null)
+        {
+            StopCoroutine(_lumenCollectCoroutine);
+            _lumenCollectCoroutine = null;
         }
 
         _collectable = null;

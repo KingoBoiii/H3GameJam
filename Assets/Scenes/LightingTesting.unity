@@ -385,6 +385,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerRig
       objectReference: {fileID: 0}
+    - target: {fileID: 4615100563447996628, guid: 438575cbe5b6a8e4a91548d20bd3179a, type: 3}
+      propertyPath: _startLumen
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4615100563447996628, guid: 438575cbe5b6a8e4a91548d20bd3179a, type: 3}
+      propertyPath: _decreaseTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4615100563447996628, guid: 438575cbe5b6a8e4a91548d20bd3179a, type: 3}
+      propertyPath: _lumenDecreaseAmount
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 438575cbe5b6a8e4a91548d20bd3179a, type: 3}
 --- !u!1 &296275557 stripped
