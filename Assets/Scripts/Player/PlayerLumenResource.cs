@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 internal class PlayerLumenResource : MonoBehaviour
 {
@@ -10,12 +11,15 @@ internal class PlayerLumenResource : MonoBehaviour
 
     [field: SerializeField] public float Lumen { get; set; }
 
+    [SerializeField] private Light2D _light;
+
     private float _currentTime;
 
     private void Start()
     {
         Lumen = _startLumen;
         UpdateUI();
+        UpdateLight();
     }
 
     private void Update()
@@ -25,12 +29,13 @@ internal class PlayerLumenResource : MonoBehaviour
 
     private void DecreaseLuman()
     {
-        if (_currentTime < Time.time)
+        if (_currentTime < Time.time && Lumen > 0.0f)
         {
             _currentTime = Time.time + _decreaseTime;
             Lumen -= _lumenDecreaseAmount;
 
             UpdateUI();
+            UpdateLight();
         }
     }
 
@@ -44,6 +49,7 @@ internal class PlayerLumenResource : MonoBehaviour
 
         Lumen += lumen;
         UpdateUI();
+        UpdateLight();
         return true;
     }
 
@@ -56,14 +62,20 @@ internal class PlayerLumenResource : MonoBehaviour
 
         Lumen -= lumen;
         UpdateUI();
+        UpdateLight();
         return true;
+    }
+
+    private void UpdateLight()
+    {
+        var lumenPercentage = Mathf.InverseLerp(0, _maxLumen, Lumen);
+        _light.intensity = lumenPercentage;
     }
 
     private void UpdateUI()
     {
-        var lumanPercentage = Mathf.InverseLerp(0, _maxLumen, Lumen);
-
-        UIManager.Instance.UpdateLumen(lumanPercentage);
+        var lumenPercentage = Mathf.InverseLerp(0, _maxLumen, Lumen);
+        UIManager.Instance.UpdateLumen(lumenPercentage);
     }
 }
 
