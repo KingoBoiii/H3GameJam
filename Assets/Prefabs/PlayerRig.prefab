@@ -567,7 +567,7 @@ MonoBehaviour:
   _startLumen: 100
   _maxLumen: 100
   _decreaseTime: 0.1
-  _lumenDecreaseAmount: 0.25
+  _lumenDecreaseAmount: 0.15
   <Lumen>k__BackingField: 0
 --- !u!114 &1909845815
 MonoBehaviour:
@@ -581,7 +581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 876e0ea9ac3df574a895cbde36642a14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lumenCollectSpeed: 5
+  _lumenCollectSpeed: 15
 --- !u!330 &5588565160489795036
 ParticleSystemForceField:
   m_ObjectHideFlags: 0
