@@ -5,6 +5,7 @@ using UnityEngine.Rendering.Universal;
 internal class LumenCollectable : MonoBehaviour, ILumenCollectable
 {
     [SerializeField] private int _startLumen = 100;
+    [field: SerializeField] public float Lumen { get; set; }
 
     [Header("Light settings")]
     [SerializeField] private Light2D _light;
@@ -16,11 +17,13 @@ internal class LumenCollectable : MonoBehaviour, ILumenCollectable
     [SerializeField] private float _regenSpeed = 0.1f;
     [SerializeField] private float _fadeSpeed = 0.7f;
 
-    public float Lumen { get; set; }
+    [Header("Particles")]
+    [SerializeField] private ParticleSystem _particleSystem;
 
     private void Start()
     {
         Lumen = _startLumen;
+        _particleSystem.Stop();
     }
 
     public float Collect()
@@ -29,17 +32,28 @@ internal class LumenCollectable : MonoBehaviour, ILumenCollectable
         {
             Lumen = 0;
 
-            StartCoroutine(RegenLumen());
-
+            Regen();
         }
         else if (Lumen > _startLumen)
         {
             Lumen = _startLumen;
         }
 
+        if(!_particleSystem.isPlaying)
+        {
+            _particleSystem.Play();
+        }
+
         UpdateLightIntensity();
 
         return Lumen;
+    }
+
+    public void Regen()
+    {
+        _particleSystem.Stop();
+        
+        StartCoroutine(RegenLumen());
     }
 
     private void UpdateLightIntensity()

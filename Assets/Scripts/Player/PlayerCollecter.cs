@@ -1,61 +1,67 @@
-﻿using System.Collections;
+﻿using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(PlayerLumenResource))]
-public class PlayerCollecter : MonoBehaviour
+public class PlayerCollecter<TCollectable> : MonoBehaviour
+    where TCollectable : ICollectable
 {
-    [SerializeField] private float _lumenCollectSpeed = 1.0f;
+    protected TCollectable Collectable { get; private set; }
 
-    private PlayerLumenResource _playerLumanResources;
+    protected event Action<TCollectable> OnTriggerEnter;
+    protected event Action<TCollectable> OnTriggerExit;
+    
+    //private ICollectable _collectable;
+    //private Coroutine _lumenCollectCoroutine;
 
-    private ICollectable _collectable;
-    private Coroutine _lumenCollectCoroutine;
+    //private void Update()
+    //{
+    //    //if (_collectable == null)
+    //    //{
+    //    //    return;
+    //    //}
 
-    private void Awake()
-    {
-        _playerLumanResources = GetComponent<PlayerLumenResource>();
-    }
+    //    //if (Input.GetKeyDown(KeyCode.E))
+    //    //{
+    //    //    if (_lumenCollectCoroutine != null)
+    //    //    {
+    //    //        StopCoroutine(_lumenCollectCoroutine);
+    //    //        _lumenCollectCoroutine = null;
+    //    //    }
 
-    private void Update()
-    {
-        if (_collectable == null)
-        {
-            return;
-        }
+    //    //    _lumenCollectCoroutine = StartCoroutine(CollectLumen((ILumenCollectable)_collectable));
+    //    //    _collectable = null;
+    //    //}
+    //}
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (_lumenCollectCoroutine != null)
-            {
-                StopCoroutine(_lumenCollectCoroutine);
-                _lumenCollectCoroutine = null;
-            }
+    //protected virtual void OnUpdate()
+    //{
+    //}
 
-            _lumenCollectCoroutine = StartCoroutine(CollectLumen((ILumenCollectable)_collectable));
-            _collectable = null;
-        }
-    }
+    //private IEnumerator CollectLumen(ILumenCollectable lumenCollectable)
+    //{
+    //    var lumenToCollect = lumenCollectable.Collect();
+    //    var lastLumen = lumenToCollect;
+    //    var playerLumenNotFull = true;
 
-    private IEnumerator CollectLumen(ILumenCollectable lumenCollectable)
-    {
-        var lumenToCollect = lumenCollectable.Collect();
-        var lastLumen = lumenToCollect;
+    //    while (lumenToCollect > 0.0f && playerLumenNotFull)
+    //    {
+    //        lumenToCollect -= _lumenCollectSpeed * Time.deltaTime;
 
-        while (lumenToCollect > 0.0f)
-        {
-            lumenToCollect -= _lumenCollectSpeed * Time.deltaTime;
+    //        var lumenToAdd = lastLumen - lumenToCollect;
 
-            var lumenToAdd = lastLumen - lumenToCollect;
+    //        playerLumenNotFull = _playerLumanResources.AddLumen(lumenToAdd);
 
-            _playerLumanResources.AddLumen(lumenToAdd);
+    //        lumenCollectable.Lumen = lumenToCollect;
+    //        lastLumen = lumenCollectable.Collect();
 
-            lumenCollectable.Lumen = lumenToCollect;
-            lastLumen = lumenCollectable.Collect();
+    //        if (!playerLumenNotFull)
+    //        {
+    //            lumenCollectable.Regen();
+    //        }
 
-            yield return null;
-        }
-    }
+    //        yield return null;
+    //    }
+    //}
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -64,26 +70,22 @@ public class PlayerCollecter : MonoBehaviour
             return;
         }
 
-        _collectable = collectable;
+        Collectable = (TCollectable)collectable;
+        OnTriggerEnter?.Invoke(Collectable);
 
         Debug.Log($"Entered trigger: {other.name}");
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (!other.TryGetComponent<ICollectable>(out var _))
+        if (!other.TryGetComponent<ICollectable>(out var collectable))
         {
             return;
         }
 
-        if (_lumenCollectCoroutine != null)
-        {
-            StopCoroutine(_lumenCollectCoroutine);
-            _lumenCollectCoroutine = null;
-        }
-
-        _collectable = null;
-
+        OnTriggerExit?.Invoke(Collectable);
+        Collectable = default;
+        
         Debug.Log($"Exited trigger: {other.name}");
     }
 }
