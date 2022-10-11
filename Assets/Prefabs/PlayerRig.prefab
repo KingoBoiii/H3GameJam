@@ -466,8 +466,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b8a0096250c7584c961789d18caaf69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startLumen: 0
+  _startLumen: 100
   _maxLumen: 100
+  _decreaseTime: 0.1
+  _lumenDecreaseAmount: 0.25
   <Lumen>k__BackingField: 0
 --- !u!114 &100645881293456870
 MonoBehaviour:
