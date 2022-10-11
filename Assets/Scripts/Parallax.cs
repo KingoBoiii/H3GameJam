@@ -2,32 +2,36 @@ using UnityEngine;
 
 public class Parallax : MonoBehaviour
 {
-    public GameObject camera;
-    public float parallaxEffect;
+    [SerializeField] private float _parallaxEffect;
 
-    private float length;
-    private float startPos;
+    private Transform _cameraTransform;
+
+    private float _length;
+    private float _startPos;
 
     private void Start()
     {
-        startPos = transform.position.x;
-        length = GetComponent<SpriteRenderer>().bounds.size.x;
+        _startPos = transform.position.x;
+        _length = GetComponent<SpriteRenderer>().bounds.size.x;
+
+        var camera = Camera.main;
+        _cameraTransform = camera.transform;
     }
 
     private void FixedUpdate()
     {
-        float temp = (camera.transform.position.x * (1 - parallaxEffect));
-        float distance = (camera.transform.position.x * parallaxEffect);
+        float temp = (_cameraTransform.position.x * (1 - _parallaxEffect));
+        float distance = (_cameraTransform.position.x * _parallaxEffect);
 
-        transform.position = new Vector3(startPos + distance, transform.position.y, transform.position.z);
+        transform.position = new Vector3(_startPos + distance, transform.position.y, transform.position.z);
 
-        if (temp > startPos + length)
+        if (temp > _startPos + _length)
         {
-            startPos += length;
+            _startPos += _length;
         }
-        else if (temp < startPos - length)
+        else if (temp < _startPos - _length)
         {
-            startPos -= length;
+            _startPos -= _length;
         }
     }
 }
