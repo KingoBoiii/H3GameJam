@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 0.72
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 000000000f6b5d7f8f0999b7bf61df0b8973f01f13bd6765
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -501,6 +501,7 @@ GameObject:
   - component: {fileID: 103255100394798851}
   - component: {fileID: 5588565160489795036}
   - component: {fileID: 103255100394798852}
+  - component: {fileID: 6881416027638397094}
   - component: {fileID: 4615100563447996628}
   - component: {fileID: 1909845815}
   m_Layer: 0
@@ -566,9 +567,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingLayerID: 1701297427
+  m_SortingLayer: 5
+  m_SortingOrder: 0
   m_Sprite: {fileID: -2087900371, guid: 593051730700a214a86a2436c774b139, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1162,6 +1163,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   CheckRadius: 0.2
+--- !u!114 &6881416027638397094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103255100394798874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a618ec485b6f36545a5bc64178611224, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4615100563447996628
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -20,6 +20,11 @@ internal class LumenCollectable : MonoBehaviour, ILumenCollectable
         _particleSystem.Stop();
     }
 
+    public void Interact()
+    {
+        Collect();
+    }
+
     public float Collect()
     {
         if (Lumen <= 0)

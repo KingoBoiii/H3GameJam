@@ -2,52 +2,53 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerLumenResource))]
-public class PlayerLumenCollector : PlayerCollecter<ILumenCollectable>
+internal class PlayerLumenCollector : MonoBehaviour
 {
     [SerializeField] private float _lumenCollectSpeed = 1.0f;
 
     private PlayerLumenResource _playerLumanResources;
+    private PlayerInteract _playerInteract;
 
     private Coroutine _lumenCollectCoroutine;
 
     private void Awake()
     {
         _playerLumanResources = GetComponent<PlayerLumenResource>();
+        _playerInteract = GetComponent<PlayerInteract>();
     }
 
     private void Start()
     {
-        OnTriggerExit += PlayerLumenCollector_OnTriggerExit;
+        _playerInteract.OnInteractEvent += OnInteractFunc;
+        _playerInteract.OnTriggerExitEvent += OnTriggerExitFunc;
     }
 
-    private void PlayerLumenCollector_OnTriggerExit(ILumenCollectable collectable)
+    private void OnInteractFunc(IInteractable interactable)
     {
+        if (interactable is not ILumenCollectable)
+        {
+            return;
+        }
+        
+        var lumenCollectable = interactable as ILumenCollectable;
+        _lumenCollectCoroutine = StartCoroutine(CollectLumen(lumenCollectable));
+    }
+
+    private void OnTriggerExitFunc(IInteractable interactable)
+    {
+        if(interactable is not ILumenCollectable)
+        {
+            return;
+        }
+
         if (_lumenCollectCoroutine != null)
         {
             StopCoroutine(_lumenCollectCoroutine);
             _lumenCollectCoroutine = null;
         }
 
-        collectable.Regen();
-    }
-
-    private void Update()
-    {
-        if(Collectable == null)
-        {
-            return;
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (_lumenCollectCoroutine != null)
-            {
-                StopCoroutine(_lumenCollectCoroutine);
-                _lumenCollectCoroutine = null;
-            }
-
-            _lumenCollectCoroutine = StartCoroutine(CollectLumen(Collectable));
-        }
+        var lumenCollectable = interactable as ILumenCollectable;
+        lumenCollectable.Regen();
     }
 
     private IEnumerator CollectLumen(ILumenCollectable lumenCollectable)
