@@ -7,18 +7,12 @@ internal class LumenCollectable : MonoBehaviour, ILumenCollectable
     [SerializeField] private int _startLumen = 100;
     [field: SerializeField] public float Lumen { get; set; }
 
-    [Header("Light settings")]
     [SerializeField] private Light2D _light;
-    [SerializeField] private float _minIntensity = 0.2f;
-    [SerializeField] private float _maxIntensity = 1f;
+    [SerializeField] private ParticleSystem _particleSystem;
 
     [Header("Fade settings")]
     [SerializeField] private float _timeBeforeRegen = 2.0f;
     [SerializeField] private float _regenSpeed = 0.1f;
-    [SerializeField] private float _fadeSpeed = 0.7f;
-
-    [Header("Particles")]
-    [SerializeField] private ParticleSystem _particleSystem;
 
     private void Start()
     {
