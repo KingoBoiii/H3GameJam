@@ -13,7 +13,7 @@ public class Parallax : MonoBehaviour
         _cameraTransform = camera.transform;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         transform.position = Vector3.Scale(_cameraTransform.position, _parallaxMovementScale);
     }
