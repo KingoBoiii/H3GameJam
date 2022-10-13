@@ -30,7 +30,7 @@ internal class PlayerLumenCollector : MonoBehaviour
             return;
         }
         
-        var lumenCollectable = interactable as ILumenCollectable;
+        var lumenCollectable = _playerInteract.GetAs<ILumenCollectable>();
         _lumenCollectCoroutine = StartCoroutine(CollectLumen(lumenCollectable));
     }
 
@@ -47,7 +47,7 @@ internal class PlayerLumenCollector : MonoBehaviour
             _lumenCollectCoroutine = null;
         }
 
-        var lumenCollectable = interactable as ILumenCollectable;
+        var lumenCollectable = _playerInteract.GetAs<ILumenCollectable>();
         lumenCollectable.Regen();
     }
 

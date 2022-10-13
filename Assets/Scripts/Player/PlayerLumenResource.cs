@@ -15,6 +15,9 @@ internal class PlayerLumenResource : MonoBehaviour
 
     private float _currentTime;
 
+    public bool IsFull => Lumen >= _maxLumen;
+    public bool IsEmpty => Lumen <= 0.0f;
+
     private void Start()
     {
         Lumen = _startLumen;
