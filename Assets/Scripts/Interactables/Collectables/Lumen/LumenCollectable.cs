@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-internal class LumenCollectable : MonoBehaviour, ILumenCollectable
+internal class LumenCollectable : Interactable, ILumenCollectable
 {
     [SerializeField] private int _startLumen = 100;
     [field: SerializeField] public float Lumen { get; set; }
@@ -20,7 +20,7 @@ internal class LumenCollectable : MonoBehaviour, ILumenCollectable
         _particleSystem.Stop();
     }
 
-    public void Interact()
+    public override void Interact()
     {
         Collect();
     }

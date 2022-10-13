@@ -5,8 +5,10 @@ internal class PlayerObjectiveHandler : MonoBehaviour
 {
     [SerializeField] private float _transferSpeed = 1.0f;
 
+    [SerializeField] private ParticleSystem _particleSystem;
     private PlayerLumenResource _playerLumenResource;
     private PlayerInteract _playerInteract;
+    private ParticleSystemForceField _forceField;
 
     private Coroutine _transferCoroutine = null;
 
@@ -14,25 +16,31 @@ internal class PlayerObjectiveHandler : MonoBehaviour
     {
         _playerLumenResource = GetComponent<PlayerLumenResource>();
         _playerInteract = GetComponent<PlayerInteract>();
+        _forceField = GetComponent<ParticleSystemForceField>();
     }
 
     private void Start()
     {
         _playerInteract.OnInteractEvent += OnInteractFunc;
         _playerInteract.OnTriggerExitEvent += OnTriggerExitFunc;
+
+        _particleSystem.Stop();
     }
 
     private void OnInteractFunc(IInteractable interactable)
     {
-        if(interactable is not IObjective)
+        if (interactable is not IObjective)
         {
             return;
         }
 
         var objective = _playerInteract.GetAs<IObjective>();
 
-        if(objective is ILumenObjective lumenObjective)
+        if (objective is ILumenObjective lumenObjective)
         {
+            _forceField.enabled = false;
+            _particleSystem.Play();
+
             _transferCoroutine = StartCoroutine(TransferLumenToObjective(lumenObjective));
         }
     }
@@ -44,11 +52,14 @@ internal class PlayerObjectiveHandler : MonoBehaviour
             return;
         }
 
-        if(_transferCoroutine != null)
+        if (_transferCoroutine != null)
         {
             StopCoroutine(_transferCoroutine);
             _transferCoroutine = null;
         }
+
+        _forceField.enabled = true;
+        _particleSystem.Stop();
     }
 
     private IEnumerator TransferLumenToObjective(ILumenObjective objective)
@@ -71,5 +82,6 @@ internal class PlayerObjectiveHandler : MonoBehaviour
         {
             objective.Complete();
         }
+        _particleSystem.Stop();
     }
 }

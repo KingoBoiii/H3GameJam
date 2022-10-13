@@ -36,6 +36,7 @@ public class PlayerInteract : MonoBehaviour
         }
 
         _interactable = interactable;
+        _interactable.OnInteractableEnter();
         OnTriggerEnterEvent?.Invoke(_interactable);
     }
 
@@ -47,6 +48,7 @@ public class PlayerInteract : MonoBehaviour
         }
 
         OnTriggerExitEvent?.Invoke(_interactable);
+        _interactable.OnInteractableExit();
         _interactable = default;
     }
 }
